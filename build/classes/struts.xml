@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="default" namespace="/" extends="struts-default">
+	</package>
+	<package name="user" namespace="/user" extends="default">
+		<action name="*_*" class="action.{1}Action" method="{2}">
+			<!-- <result name="login_success">/jsp/login_success.jsp</result> -->
+			<result name="login_success" type="chain">
+			<param name="actionName">Student_queryAll</param>
+			<param name="namespace">/student</param>
+			</result>
+			<result name="login_fail">/index.jsp</result>
+			<result name="reg_success" type="chain">
+			<param name="actionName">Student_queryAll</param>
+			<param name="namespace">/student</param>
+			</result>
+			<result name="reg_fail">/index.jsp</result>
+		</action>
+	</package>
+	<package name="student" namespace="/student" extends="default">
+		<action name="*_*" class="action.{1}Action" method="{2}">
+			<result name="queryAll_success">/jsp/show.jsp</result>
+			<result name="addStudent_success" type="chain">Student_queryAll</result>
+			<result name="addStudent_fail">/jsp/addScore.jsp</result>
+			<result name="update_success">/jsp/addScore.jsp</result>
+			<result name="update_fail">/jsp/addScore_success.jsp</result>
+			<result name="delete_success" type="chain">Student_queryAll</result>
+			<result name="delete_fail" type="chain">Student_queryAll</result>
+		</action>
+	</package>
+	<package name="score" namespace="/score" extends="default">
+		<action name="*_*" class="action.{1}Action" method="{2}">
+			<result name="addScore_success">/jsp/addScore_success.jsp</result>
+			<result name="addScore_fail">/jsp/addScore.jsp</result>
+			<result name="update_success" type="chain">
+			<param name="actionName">Student_queryAll</param>
+			<param name="namespace">/student</param>
+			</result>
+			<result name="update_fail" type="chain">/jsp/addScore_success.jsp</result>
+			<result name="query_success">/jsp/showScore.jsp</result>
+		</action>
+	</package>
+</struts>
